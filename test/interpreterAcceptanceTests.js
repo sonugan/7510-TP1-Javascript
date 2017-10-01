@@ -90,9 +90,6 @@ describe("Interpreter", function () {
         it('    varon   (   juan    ) should be true', function () {
             assert(interpreter.checkQuery('    varon   (   juan    )'));
         });
-
-        // TODO: Add more tests
-
     });
 
     describe('Interpreter Rules', function () {
@@ -121,9 +118,6 @@ describe("Interpreter", function () {
         it('Hija(maria, roberto), should be null', function () {
             assert(interpreter.checkQuery('Hija(maria, roberto)') === null);
         });
-
-        // TODO: Add more tests
-
     });
 
     describe('Invalid format', function(){
@@ -139,9 +133,9 @@ describe("Interpreter", function () {
             assert(interpreter.checkQuery('padre(pepe, ,cecilia)') === null);
         });
 
-        // it('hijo(pe:-pe, juan) should be true', function () {
-        //     assert(interpreter.checkQuery('hijo(pe:-pe, juan)') === null);
-        // });
+        it('hijo(pe:-pe, juan) has an invalid format, should be null', function () {
+            assert(interpreter.checkQuery('hijo(pe:-pe, juan)') === null);
+        });
     })
 
     describe('Nonalfabetical characters', function(){

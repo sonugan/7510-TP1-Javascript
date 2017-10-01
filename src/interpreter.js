@@ -7,7 +7,6 @@ var Interpreter = function () {
         let strFormatRuleParamsName = "[A-Z]{1,}[_\\0-9A-Z]*"
         let strFormatRuleParams = "\\(" + strFormatRuleParamsName + "(," + strFormatRuleParamsName + "){0,}\\)"
         let strFormatFactQueryParams = "\\([^\\( :-]{1,}(,[^\\( :-]{1,}){0,}\\)"
-        //let strRule = "^[^\\(]{1,}\\([A-Z0-9]{1,}(,[A-Z0-9]{1,})*\\):-[^\\(]{1,}\\([A-Z0-9]{1,}(,[A-Z0-9]{1,})*\\)([^\\(]{1,}\\([A-Z0-9]{1,}(,[A-Z0-9]{1,})*\\))*$"
         let strRule = "^[^\(]{1,}\([A-Z0-9]{1,}(,[A-Z0-9]{1,})*\):-[^\(]{1,}\([A-Z0-9]{1,}(,[A-Z0-9]{1,})*\)([^\(]{1,}\([A-Z0-9]{1,}(,[A-Z0-9]{1,})*\))*$"
         let strFact = "^" + strregFormatSentenceName + strFormatFactQueryParams + "$"
 
@@ -25,7 +24,6 @@ var Interpreter = function () {
         //Regular expression que define el formato válido de una Rule
         this.regRule = new RegExp(strRule)
         this.regFact = new RegExp(strFact)
-        //this.regValidSentece = new RegExp("(" + strRule + ")|(" + strFact + ")")
         this.regValidSentece = new RegExp("[a-zA-Z]*")
     }
     let regex = new RegexCollection();
@@ -95,9 +93,6 @@ var Interpreter = function () {
         return null
     }
 
-    var Sentence = function () {
-        
-    }
     //varon(juan) <-> varon(X):-X==juan
     var Fact = function (name, argsCount) {
         this.name = name
@@ -196,41 +191,3 @@ var Interpreter = function () {
 }
 
 module.exports = Interpreter;
-
-var db = [
-    "varon(juan).",
-    "varon(pepe).",
-    "varon(hector).",
-    "varon(roberto).",
-    "varon(alejandro).",
-    "mujer(maria).",
-    "mujer(cecilia).",
-    "padre(juan, pepe).",
-    "padre(juan, pepa).",
-    "padre(hector, maria).",
-    "padre(roberto, alejandro).",
-    "padre(roberto, cecilia).",
-    "hijo(X, Y) :- varon(X), padre(Y, X).",
-    "hija(X, Y) :- mujer(X), padre(Y, X)."
-];
-
-
-let interpreter = new Interpreter();
-interpreter.parseDB(db);
-console.log(interpreter.checkQuery("Varon(juan)"))
-// console.log(interpreter.checkQuery("mujer(cecilia)"))
-// console.log(interpreter.checkQuery("padre(roberto, cecilia)"))
-// console.log(interpreter.checkQuery("hija(cecilia,roberto)"))
-// console.log(interpreter.checkQuery("varon(carolina)"))
-// console.log(interpreter.checkQuery("hija(cecilia,robert)"))
-// let getParameters = (sentence) => {
-//     let strFormatFactQueryParams = "\\([^\\( :-]{1,}(,[^\\( :-]{1,}){0,}\\)"
-//     let formatFactQueryParams = /\([^,:\-\)\(]{1,}(,[^,:\-\)\(]{1,})*\)/
-//     let regexResult = sentence.match(formatFactQueryParams) 
-//     console.log(regexResult)
-//     if(regexResult.length > 0){
-//        return regexResult[0].replace(/[\(\)]/g,"").split(",")
-//     }
-//     return null
-// }
-// console.log(getParameters("padre(roberto, cecilia)"))
