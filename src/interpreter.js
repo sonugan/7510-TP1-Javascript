@@ -110,10 +110,10 @@ var Interpreter = function () {
             this.args.push(args)
         }
         this.evaluate = (params) => {
+            if(!params || this.argsCount != params.length){
+                return null
+            }
             return this.args.map(arg => { 
-                if(!params || arg.length != params.length){
-                    return false
-                }
                 return arg.map((a,i) => { 
                     return a == params[i]
                 }).reduce(and)
@@ -129,6 +129,9 @@ var Interpreter = function () {
         this.args = args
         this.trueFuncs = trueFuncs
         this.evaluate = (params) => {
+            if(!params || params.length != this.args.length){
+                return null
+            }
             let paramsToEval = {}
             this.args.forEach((a,i) => { paramsToEval[a] = params[i] })
             return this.trueFuncs.map(f => { return f.evaluate(paramsToEval)}).reduce((r1,r2) => { return r1 && r2 })
@@ -211,9 +214,10 @@ var db = [
     "hija(X, Y) :- mujer(X), padre(Y, X)."
 ];
 
-// let interpreter = new Interpreter();
-// interpreter.parseDB(db);
-// console.log(interpreter.checkQuery("varon(juan)"))
+
+let interpreter = new Interpreter();
+interpreter.parseDB(db);
+console.log(interpreter.checkQuery("Varon(juan)"))
 // console.log(interpreter.checkQuery("mujer(cecilia)"))
 // console.log(interpreter.checkQuery("padre(roberto, cecilia)"))
 // console.log(interpreter.checkQuery("hija(cecilia,roberto)"))
