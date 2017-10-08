@@ -1,5 +1,3 @@
-var Parser = require('../src/parser');
-
 var Interpreter = function () {
     var RegexCollection = function () {
         let strNoisyCharacters = "[ \. \t]"
